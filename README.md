@@ -40,20 +40,20 @@ Also, there is a new project underway, Apache Bigtop blueprints, which aims to c
 Contributing 
 ============
 
-    There are lots of ways to contribute, people with different expertise can help with various subprojects:
+There are lots of ways to contribute, people with different expertise can help with various subprojects:
     
-* __puppet__ : Much of the Apache Bigtop deploy and pacakging tools use puppet to bootstrap and setup a cluster. But recipes for other tools are also welcome (ie. Chef, Ansible, etc.)
+* __puppet__ : Much of the Apache Bigtop deploy and packaging tools use puppet to bootstrap and setup a cluster. But recipes for other tools are also welcome (ie. Chef, Ansible, etc.)
 * __groovy__ : Primary language used to write the Apache Bigtop smokes and itest framework. 
 * __maven__ : Used to build Apache Bigtop smokes and also to define the high level Apache Bigtop project. 
 * __RPM/DEB__ : Used to package Apache Hadoop ecosystem related projects into GNU/Linux installable packages for most popular GNU/Linux distributions. So one could add a new project or improve existing packages.
 * __hadoop__ : Apache Hadoop users can also contribute by using the Apache Bigtop smokes, improving them, and evaluating their breadth.
-* __contributing your worloads__ : Contributing your workloads enable us to tests projects against real use cases and enable you to have people verifying the use cases you care about are always working
+* __contributing your workloads__ : Contributing your workloads enable us to tests projects against real use cases and enable you to have people verifying the use cases you care about are always working
 * __documentation__ : We are always in need of a better documentation!
 * __giving feedback__ : Tell us how you use Apache Bigtop, what was great and what was not so great. Also what are you expecting from it and what would you like to see in the future?
  
     Also opening JIRA's https://issues.apache.org/jira/browse/BIGTOP and getting started by posting on the mailing list is helpful.
 
-What to people use Apache Bigtop for? 
+What do people use Apache Bigtop for? 
 ==============================
 
 You can go to the Apache Bigtop website : http://bigtop.apache.org/ for notes on how to do "common" tasks like
@@ -78,17 +78,23 @@ WARNING: since testing packages requires installing them on a live system it is 
 *... and so on.*
  
 * Step 1: Build the smokes with snapshots.  This ensures that all transitive dependencies etc.. are in your repo
-    * mvn clean install -DskipTests -DskipITs -DperformRelease -f ./bigtop-test-framework/pom.xml
-    * mvn clean install -DskipTests -DskipITs -DperformRelease -f ./test-artifacts/pom.xml
+
+        mvn clean install -DskipTests -DskipITs -DperformRelease -f ./bigtop-test-framework/pom.xml
+        mvn clean install -DskipTests -DskipITs -DperformRelease -f ./test-artifacts/pom.xml
+
 * Step 2: Now, rebuild in "offline" mode.  This will make sure that your local changes to bigtop are embeded in the changes.
-    * mvn clean install -DskipTests -DskipITs -DperformRelease -o -nsu -f ./bigtop-test-framework/pom.xml
-    * mvn clean install -DskipTests -DskipITs -DperformRelease -o -nsu -f ./bigtop-tests/test-artifacts/pom.xml
+
+        mvn clean install -DskipTests -DskipITs -DperformRelease -o -nsu -f ./bigtop-test-framework/pom.xml
+        mvn clean install -DskipTests -DskipITs -DperformRelease -o -nsu -f ./bigtop-tests/test-artifacts/pom.xml
  
 * Step 3: Now, you can run the smoke tests on your cluster.
     * Example 1: Running all the smoke tests with TRACE level logging (shows std out from each mr job). 
-      * mvn clean verify -Dorg.apache.bigtop.itest.log4j.level=TRACE -f ./bigtop/bigtop-tests/test-execution/smokes/pom.xml 
+      
+        mvn clean verify -Dorg.apache.bigtop.itest.log4j.level=TRACE -f ./bigtop/bigtop-tests/test-execution/smokes/pom.xml 
+
     * Just running hadoop examples, nothing else.
-      * mvn clean verify -D'org.apache.maven-failsafe-plugin.testInclude=**/*TestHadoopExamples*' -f bigtop-tests/test-execution/smokes/package/pom.xml
+
+        mvn clean verify -D'org.apache.maven-failsafe-plugin.testInclude=**/*TestHadoopExamples*' -f bigtop-tests/test-execution/smokes/package/pom.xml
  
     Note: A minor bug/issue: you need the "testInclude" regular expression above, even if you don't want to customize the tests, 
     since existing test names don't follow the maven integration test naming convention of IT*, but instead, follow the surefire (unit test) convention of Test*.
@@ -96,11 +102,11 @@ WARNING: since testing packages requires installing them on a live system it is 
 For Users: Creating Your Own Apache Hadoop Environment 
 -----------------------------------------------
 
-    Another common use case for Apache Bigtop is creating / setting up your own Apache Hadoop distribution.  
-    For details on this, check out the bigtop-deploy/README.md file, which describes how to use the puppet repos
-    to create and setup your VMs.  
-    There is a current effort underway to create vagrant/docker recipes as well, which will be contained in the 
-    bigtop-deploy/ package.     
+Another common use case for Apache Bigtop is creating / setting up your own Apache Hadoop distribution.  
+For details on this, check out the bigtop-deploy/README.md file, which describes how to use the puppet repos
+to create and setup your VMs.  
+There is a current effort underway to create vagrant/docker recipes as well, which will be contained in the 
+bigtop-deploy/ package.     
 
 
 For Developers: Building the entire distribution from scratch
@@ -118,14 +124,17 @@ __On all systems, Building Apache Bigtop requires the following tools__
   * __Debian__ based distros need these packages : build-essential dh-make debhelper devscripts, reprepro
   * __openSUSE 11.4__ needs these packages : relaxngDatatypedocbook-utils docbook-simple, asciidoc, fuse-devel, docbook5, docbook5-xsl-stylesheets, libxml2-devel, xmlformat, xmlto, libxslt, libopenssl-devel
 
-* __Building packages__ : make [component-name]-[rpm|deb]
-* __Building local YUM/APT repositories__ : make [component-name]-[yum|apt]
+* __Building packages__ : 
 
----------------------- 
+        make [component-name]-[rpm|deb]
+
+* __Building local YUM/APT repositories__ : 
+
+        make [component-name]-[yum|apt]
+
 
 Contact us
-
 ----------------------
 
-    You can get in touch with us on the Apache Bigtop mailing lists (http://bigtop.apache.org/mail-lists.html).
+You can get in touch with us on the Apache Bigtop mailing lists (http://bigtop.apache.org/mail-lists.html).
 
